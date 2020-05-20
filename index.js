@@ -8,6 +8,16 @@ module.exports = app => {
 
   app.on('issues.opened', async context => {
     const issueComment = context.issue({ body: 'Thanks for opening this issue!' })
+    var exec = require("child_process").exec
+    cmdStr = "curl  http://push.ijingniu.cn/send -X POST -d 'key=31ab2edeb942469089e8166bf39357a0&head=测试&body=啊呀'"
+    exec(cmdStr, function(err, stdout, stderr) {
+      if (err) {
+        app.log("Send message error: " + stderr)
+      } else {
+        var data = JSON.parse(stdout)
+        app.log(data)
+      }
+    })
     return context.github.issues.createComment(issueComment)
   })
 
