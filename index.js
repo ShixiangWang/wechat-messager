@@ -13,9 +13,9 @@ module.exports = app => {
   commands(app, 'initKey', (context, command) => {
     var initKey2 = command.arguments.split(/, */)
     if (initKey != "") {
-      var issueComment = context.issue({ body: 'Key 已载入。会发送一条测试消息，如果失败请检查 Key 值。' })
-    } else {
       var issueComment = context.issue({ body: 'Key 已更新。会发送一条测试消息，如果失败请检查 Key 值。' })
+    } else {
+      var issueComment = context.issue({ body: 'Key 已载入。会发送一条测试消息，如果失败请检查 Key 值。' })
     }
     initKey = initKey2
 
@@ -37,6 +37,8 @@ module.exports = app => {
 
   commands(app, 'send', (context, command) => { 
     var content = command.arguments.split(/, */)
+
+    app.log("Key: " + initKey)
 
     if (initKey == "") {
       var issueComment = context.issue({ body: '无法检测到 Key，请以 /initKey <key> 初始化。' })
