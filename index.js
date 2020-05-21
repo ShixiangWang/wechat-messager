@@ -6,11 +6,12 @@
 const commands = require('probot-commands')
 var initKey = ""
 
+
 module.exports = app => {
   // Your code here
   app.log('Yay, the app was loaded!')
 
-  commands(app, 'initKey', (context, command) => {
+  commands(app, 'initKey', async (context, command) => {
     var initKey2 = command.arguments.split(/, */)
     if (initKey != "") {
       var issueComment = context.issue({ body: 'Key 已更新。会发送一条测试消息，如果失败请检查 Key 值。' })
@@ -35,7 +36,8 @@ module.exports = app => {
     return context.github.issues.createComment(issueComment)
   })
 
-  commands(app, 'send', (context, command) => { 
+  commands(app, 'send', async (context, command) => { 
+
     var content = command.arguments.split(/, */)
 
     app.log("Key: " + initKey)
